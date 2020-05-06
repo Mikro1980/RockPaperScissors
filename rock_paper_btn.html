@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>RockPaper</title>
+  <style>
+    button {
+        margin:10px;
+        background-color:orange;
+        color: white;
+        border: solid 2px white;
+        font-size: 20px;
+        padding: 10px;
+        border-radius: 10px;
+        transition-duration: .6s;
+        width: 140px;
+    }
+    .button1:hover {
+        background-color:rgb(241, 212, 45);
+        box-shadow: black 2px 2px 5px;
+        color: black;
+        font-size: 22px;
+    }
+    body {
+      background-color:rgb(0, 255, 136);
+    }
+    h1 {text-align: center;
+        color: rgb(10, 133, 233);
+        text-shadow:2px 1px 2px black ;}
+    .new {text-align: center;
+        color: rgb(19, 20, 20);
+        font-size: 2em;
+        
+    }    
+    p {font-size: 2em;}  
+
+    .container {
+        margin: auto;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }  
+    .reset {
+        margin: 50px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+       
+    }
+  </style>
+</head>
+<body>
+<h1>Rock-paper-scissors with buttons</h1>
+
+<div class='container'>
+<button id='камень' value='камень' class = 'button1'>Камень</button>
+<button id='ножницы' value='ножницы' class = 'button1'>Ножницы</button>
+<button id='бумага' value='бумага' class = 'button1'>Бумага</button>
+</div>
+<div id="result"></div>
+<div class='reset'>
+<button id='reset' class ='button1'>RESET</button>
+</div>
+
+
+<script>
+  let scorePlayer = 0;
+  let scoreComp = 0;  
+
+  const rck = document.getElementById('камень');
+  const scrs = document.getElementById('ножницы');
+  const ppr = document.getElementById('бумага');
+  const rst = document.getElementById('reset');
+  const result = document.getElementById('result')
+  const container = document.querySelector('div');
+  const h3 = document.createElement('div');
+  
+  let tom = new Audio();
+  tom.src = 'tom.wav';
+  function PlaySound(){
+      tom.play();
+  }
+
+  h3.classList.add('new');
+  
+
+  let playerSelection;
+  let computerSelection
+
+  rst.addEventListener('click', ()=>{
+    PlaySound();
+    scorePlayer=0;
+    scoreComp=0;
+    h3.textContent = '';
+  })
+
+  rck.addEventListener('click', ()=>{
+      
+      h3.textContent = '';
+      playerSelection = rck.value;
+      computerPlay();
+      playRound();
+      });
+
+  scrs.addEventListener('click', ()=>{
+      h3.textContent = '';
+      playerSelection = scrs.value;
+      computerPlay();
+      playRound();
+      });    
+
+  ppr.addEventListener('click', ()=>{
+      h3.textContent = '';
+      playerSelection = ppr.value;
+      computerPlay();
+      playRound();
+      }); 
+     
+function computerPlay(){  
+    let x = Math.floor(Math.random() * 3);
+      if (x == 0) {
+        computerSelection = 'камень';
+      } else if (x == 1) {
+        computerSelection = 'бумага';
+      } else {
+        computerSelection = 'ножницы';
+      }
+    }
+
+function playRound() {  
+     
+     result.appendChild(h3);
+     if (playerSelection == 'бумага' && computerSelection == 'камень' 
+        || playerSelection == 'камень' && computerSelection == 'ножницы'
+        || playerSelection == 'ножницы' && computerSelection =='бумага' ) {
+         scorePlayer = scorePlayer+1;
+         h3.textContent += computerSelection +' Поздравляю! Счёт ' + scorePlayer +'/'+scoreComp;
+         
+        }else if (playerSelection==computerSelection){
+        scorePlayer = scorePlayer+0;
+        h3.textContent +=computerSelection+' Ничья! счет ' + scorePlayer +'/'+scoreComp;
+        } else {
+        scoreComp = scoreComp+1;
+        h3.textContent += computerSelection+' Ты проиграл! Счёт ' + scorePlayer +'/'+scoreComp;
+     }
+ }
+  </script>
+</body>
+</html>
